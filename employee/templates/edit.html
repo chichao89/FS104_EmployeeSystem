@@ -1,0 +1,72 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>Edit Appraisal</title>  
+    {% load static %}  
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+       -->
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>  
+<body>
+    <div class="nav navbar-expand-md navbar-light bg-dark">
+        <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar7">
+          <ul class="navbar-nav ml-auto flex-nowrap">
+              <li class="nav-item">
+                  <a href="#" class="nav-link text-light">Welcome {{request.user}}</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'logout' %}" class="nav-link text-light">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>  
+<form method="POST" class="post-form" action="/update/{{form.EmpId}}">  
+        {% csrf_token %}  
+    <div class="container">  
+<br>  
+    <div class="form-group row">  
+    <label class="col-sm-1 col-form-label"></label>  
+    <div class="col-sm-4">  
+    <h3>Update Appraisal Details</h3>  
+    </div>  
+  </div>  
+    <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Employee Name:</label>  
+    <div class="col-sm-4 col-form-label"> 
+        {{ form.first_name }} {{ form.last_name }} 
+        <!-- <input type="text" name="eid" id="id_eid" required maxlength="20" value="{{ employee.EmpId }}"/>   -->
+    </div>  
+  </div>  
+  <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Appraisal Rating :</label>  
+    <div class="col-sm-4 col-form-label"> <input type="text" name="rating_id" id="id_appid" required maxlength="5" value=" {{ appraisal.rating_id}}"/> </div>   
+    <div>    <span>Please update with number values :
+      (1, "A+"),
+      (2, "A"),
+      (3, "B+"),
+      (4, "B"),
+      (5, "C+"),
+      (6, "C"),
+      (7, "D"),
+      (8, "F")</span></div>
+  </div>
+  <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Appraisal Comments :</label>  
+    <div class="col-sm-4 col-form-label"> <textarea name="app_supervisor_comments" id="id_app_comment_id" rows="4" cols="50"> {{ appraisal.app_supervisor_comments}} </textarea> </div>   
+  </div> 
+  <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Department :</label>  
+    <div class="col-sm-4 col-form-label"> {{ appraisal.dept_id}} </div>   
+  </div> 
+ <div class="form-group row">  
+    <label class="col-sm-1 col-form-label"></label>  
+    <div class="col-sm-4">  
+    <button type="submit" class="btn btn-success">Update</button>  
+    </div>  
+ </div>  
+    </div>  
+</form>  
+</body>  
+</html>  

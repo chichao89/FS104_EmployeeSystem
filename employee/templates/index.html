@@ -1,0 +1,75 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>Employee Appraisal</title>  
+    {% load static %}  
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>   -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>  
+<body>
+
+<div class="nav navbar-expand-md navbar-light bg-dark">
+  <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar7">
+    <ul class="navbar-nav ml-auto flex-nowrap">
+        <li class="nav-item">
+            <a href="#" class="nav-link text-light">Welcome {{request.user}}</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'logout' %}" class="nav-link text-light">Logout</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div>
+<form method="POST" class="post-form" action="/emp">  
+        {% csrf_token %}  
+    <div class="container">  
+<br>  
+    <div class="form-group row">  
+    <label class="col-sm-1 col-form-label"></label>  
+    <div class="col-sm-4">  
+    <h3>Employee Appraisal</h3>  
+    </div>  
+   
+  </div>  
+    <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Employee Id:</label>
+    <div class="col-sm-4 col-form-label">{{ form.EmpId }}</div>  
+  </div>
+  <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Name:</label>  
+    <div class="col-sm-4 col-form-label">  
+       {{ form.first_name }} {{ form.last_name}}
+    </div>  
+  </div>   
+  <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Marital Status :</label>  
+    <div class="col-sm-4 col-form-label"> {{ form.marital_status}} </div>   
+  </div>  
+  <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Role :</label>  
+    <div class="col-sm-4 col-form-label"> {{ form.role_id}} </div>   
+  </div>
+  <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Manager :</label>  
+    <div class="col-sm-4 col-form-label"> {{ form.manager_id}} </div>   
+  </div>
+  <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Appraisal Rating :</label>  
+    <div class="col-sm-4 col-form-label"> {{ appraisal.rating_id}} </div>   
+  </div>
+  <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Appraisal Comments :</label>  
+    <div class="col-sm-4 col-form-label"> {{ appraisal.app_supervisor_comments}} </div>   
+  </div> 
+  <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Department :</label>  
+    <div class="col-sm-4 col-form-label"> {{ appraisal.dept_id}} </div>   
+  </div> 
+    </div>  
+</form> 
+</div>
+</body>  
+</html>  
