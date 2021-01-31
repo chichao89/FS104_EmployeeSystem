@@ -4,9 +4,10 @@ from . import views
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register(r'EmployeeViewSet', views.EmployeeViewSet)
-router.register(r'AppraisalViewSet',views.AppraisalViewSet)
+router.register(r'EmployeeViewSet', views.EmployeeViewSet,'Employee')
+router.register(r'AppraisalViewSet',views.AppraisalViewSet,'Appraisal')
 router.register(r'DepartmentViewSet',views.DepartmentViewSet)
+router.register(r'ManagerViewSet',views.ManagerViewSet,'Manager')
 # router.register(r'toDoLists', views.ToDoListViewSet)
 
 

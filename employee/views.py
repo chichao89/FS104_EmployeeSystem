@@ -107,21 +107,59 @@ def update(request, emp_id):
     
 class EmployeeViewSet(viewsets.ModelViewSet):
     #queryset = Employee.objects.filter(date_of_leaving__gte=date.today())
-    queryset = Employee.objects.all()
+    # queryset = Employee.objects.all()
+    def get_queryset(self):
+        user_id = self.request.user.id
+        if self.request.user.is_superuser:
+            return Employee.objects.all()
+        else:
+            return Employee.objects.filter(user_id=user_id)
     serializer_class = EmployeeSerializer
-    permission_classes = (permissions.IsAdminUser,)
+    permission_classes = (IsAdminOrReadOnly,)
+    # permission_classes = (permissions.IsAdminUser,)
+    
 
 
 class AppraisalViewSet(viewsets.ModelViewSet):
-    queryset = Appraisal.objects.all()
+    # queryset = Appraisal.objects.all()
     serializer_class = AppraisalSerializer
-    permission_classes = (permissions.IsAdminUser,)
-
+    def get_queryset(self):
+        user_id = self.request.user.id
+        if self.request.user.is_superuser:
+            return Appraisal.objects.all()
+        else:  
+            emp_id = Employee.objects.filter(user_id=user_id).values('EmpId')[0]['EmpId']
+            if Manager.objects.filter(emp_id = emp_id):
+                manager_id = Manager.objects.filter(emp_id = emp_id).values('mgr_id')[0]['mgr_id']
+                employee = Employee.objects.filter(manager_id = manager_id)            
+                return Appraisal.objects.filter(emp_id__in = employee)
+                permission_classes = (isAuthenticated,)
+            else:
+                return Appraisal.objects.filter(emp_id = emp_id)
+    #permission_classes = (permissions.IsAdminUser,)
+                permission_classes = (IsAdminOrReadOnly,)
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
     permission_classes = (permissions.IsAdminUser,)
 
-
+class ManagerViewSet(viewsets.ModelViewSet):
+    def get_serializer_class(self):
+        user_id = self.request.user.id
+        if self.request.user.is_superuser:
+             return ManagerSerializer
+        else:
+            return EmployeeSerializer
+    def get_queryset(self):
+        user_id = self.request.user.id
+        if self.request.user.is_superuser:
+            return Manager.objects.all()
+        else:
+            employee = Employee.objects.get(user_id = user_id)
+            employee_id = employee.EmpId       
+            if Manager.objects.filter(emp_id = employee_id):
+                manager_id = Manager.objects.filter(emp_id = employee_id).values('mgr_id')[0]['mgr_id']
+                return Employee.objects.filter(manager_id = manager_id)           
+    permission_classes = (IsAdminOrReadOnly,)
 
