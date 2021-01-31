@@ -17,5 +17,6 @@ urlpatterns = [
     path('', views.emp, name="home"),  
     path('edit/<int:emp_id>/', views.edit, name='edit'),  
     path('update/<int:emp_id>', views.update, name='update'), 
-    path('employee', include(router.urls)), 
+    path('employee/', include(router.urls)), 
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]  

@@ -82,7 +82,8 @@ def edit(request, emp_id):
         emp_id = int(emp_id)
         employee = Employee.objects.get(EmpId=emp_id)
         appraisal = Appraisal.objects.get(emp_id = emp_id)
-        context = {'form':employee, 'appraisal':appraisal}
+        ratings = Rating.objects.all()
+        context = {'form':employee, 'appraisal':appraisal,'ratings':ratings}
         return render(request,'edit.html', context)  
 
 

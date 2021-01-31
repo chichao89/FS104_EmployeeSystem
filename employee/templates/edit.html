@@ -42,15 +42,24 @@
   <div class="form-group row">  
     <label class="col-sm-2 col-form-label">Appraisal Rating :</label>  
     <div class="col-sm-4 col-form-label"> <input type="text" name="rating_id" id="id_appid" required maxlength="5" value=" {{ appraisal.rating_id}}"/> </div>   
-    <div>    <span>Please update with number values :
-      (1, "A+"),
-      (2, "A"),
-      (3, "B+"),
-      (4, "B"),
-      (5, "C+"),
-      (6, "C"),
-      (7, "D"),
-      (8, "F")</span></div>
+    <div>
+      <table class="table table-striped table-bordered table-sm">Update using ratings values:
+        <thead class="thead-dark">
+          <tr>  
+            <th>Rating Value</th>  
+            <th>Rating Grade</th>
+            <th>Rating Description</th>    
+        </tr>  
+        </thead>
+        {% for rating in ratings %}
+        <tr>
+          <td>{{ rating.rating_id }}</td>
+          <td>{{ rating.grade }}</td>
+          <td>{{ rating.grade_description }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
   </div>
   <div class="form-group row">  
     <label class="col-sm-2 col-form-label">Appraisal Comments :</label>  

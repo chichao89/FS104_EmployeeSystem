@@ -1,13 +1,13 @@
 # FS104_EmployeeSystem
  
 # install additional django package 
-# pip install django-phonenumber-field[phonenumbers]
+pip install django-phonenumber-field[phonenumbers]
 
 # Login as employee
-# see employee appraisal details
+see employee appraisal details
 
 # Login as manager
-# see manage appraisal details
+Manage appraisal details
 
 # Login as Admin
-# see the viewpoints
+see the api viewpoints
