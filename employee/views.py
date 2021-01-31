@@ -3,7 +3,7 @@ from .models import *
 from .serializers import *
 from rest_framework import viewsets
 from rest_framework import permissions
-from .permissions import IsAdminOrReadOnly
+from .permissions import IsAdminOrReadOnly,IsManager
 # from rest_framework.authentication import TokenAuthentication
 from .forms import EmployeeForm, AppraisalForm
 from django.contrib.auth.forms import UserCreationForm
@@ -122,6 +122,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
 class AppraisalViewSet(viewsets.ModelViewSet):
     # queryset = Appraisal.objects.all()
+    queryset = User.objects.none()
     serializer_class = AppraisalSerializer
     def get_queryset(self):
         user_id = self.request.user.id
@@ -131,13 +132,12 @@ class AppraisalViewSet(viewsets.ModelViewSet):
             emp_id = Employee.objects.filter(user_id=user_id).values('EmpId')[0]['EmpId']
             if Manager.objects.filter(emp_id = emp_id):
                 manager_id = Manager.objects.filter(emp_id = emp_id).values('mgr_id')[0]['mgr_id']
-                employee = Employee.objects.filter(manager_id = manager_id)            
-                return Appraisal.objects.filter(emp_id__in = employee)
-                permission_classes = (isAuthenticated,)
+                employee = Employee.objects.filter(manager_id = manager_id)         
+                return Appraisal.objects.filter(emp_id__in = employee)             
             else:
                 return Appraisal.objects.filter(emp_id = emp_id)
-    #permission_classes = (permissions.IsAdminUser,)
-                permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (permissions.DjangoModelPermissions|IsManager,)
+ 
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()

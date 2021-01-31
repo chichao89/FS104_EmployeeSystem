@@ -1,4 +1,4 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
+from rest_framework.permissions import BasePermission, SAFE_METHODS, DjangoModelPermissions
 
 class IsAdminOrReadOnly(BasePermission):
      def has_permission(self, request, view):
@@ -7,3 +7,9 @@ class IsAdminOrReadOnly(BasePermission):
          else:
             return request.user.is_staff
 
+
+class IsManager(BasePermission):
+    def has_permission(self, request, view):
+        if request.user and request.user.groups.filter(name='Manager'):
+            return True
+        return False
